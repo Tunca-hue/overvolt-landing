@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OverVolt | Prototype Chassis V1</title>
+    <style>
+        /* --- TYPOGRAPHY & RESET --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #030303; /* Biraz daha derin siyah */
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            overscroll-behavior: none;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            /* Canvas'a hafif bir scanline efekti ekleyelim */
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.1) 0px,
+                rgba(0, 0, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+        }
+
+        /* --- UI LAYER --- */
+        :root {
+            --main-color: #00ff88; /* OverVolt Green */
+        }
+
+        .ui-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            min-height: 250vh;
+        }
+
+        /* HUD Elements - Daha keskin kenarlar */
+        .hud {
+            position: fixed;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            color: var(--main-color);
+            opacity: 0.7;
+            letter-spacing: 1.5px;
+            pointer-events: none;
+            padding: 5px;
+            background: rgba(0, 20, 10, 0.5); /* Hafif yeşilimsi arka plan */
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+        .hud-tl { top: 20px; left: 20px; border-top: none; border-left: 3px solid var(--main-color); }
+        .hud-tr { top: 20px; right: 20px; text-align: right; border-top: none; border-right: 3px solid var(--main-color); }
+        .hud-bl { bottom: 20px; left: 20px; border-bottom: none; border-left: 3px solid var(--main-color); }
+        .hud-br { bottom: 20px; right: 20px; text-align: right; border-bottom: none; border-right: 3px solid var(--main-color); }
+
+        section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10vw;
+        }
+
+        /* --- YENİ BAŞLIK TASARIMI (Cyber Glitch) --- */
+        .cyber-title-container {
+            position: relative;
+            opacity: 0; /* GSAP ile açılacak */
+            transform: translateY(40px);
+            margin-bottom: 1rem;
+        }
+
+        h1.cyber-title {
+            font-family: 'Inter', sans-serif;
+            /* Mobilde taşmaması için clamp ayarını güncelledim */
+            font-size: clamp(4rem, 11vw, 11rem);
+            font-weight: 900; /* En kalın font */
+            line-height: 0.9;
+            text-transform: uppercase;
+            letter-spacing: -0.08em;
+            position: relative;
+            color: #fff;
+            margin: 0;
+            display: inline-block; /* Glitch efekti için gerekli */
+        }
+
+        .white-part { color: #ffffff; }
+        .green-part { color: var(--main-color); }
+
+        /* GLITCH EFEKTİ CSS */
+        h1.cyber-title::before,
+        h1.cyber-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Sol tarafa kayan yeşil kopya */
+        h1.cyber-title::before {
+            color: var(--main-color);
+            animation: glitch-effect 3s infinite linear alternate-reverse;
+            text-shadow: -2px 0 rgba(0, 255, 136, 0.5);
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            transform: translate(-2px, 2px);
+            opacity: 0.7;
+        }
+
+        /* Sağ tarafa kayan hafif mavi/beyaz kopya (Kromatik sapma için) */
+        h1.cyber-title::after {
+            color: #ffffff;
+            animation: glitch-effect 2.5s infinite linear alternate;
+            text-shadow: 2px 0 rgba(255, 255, 255, 0.5);
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+            transform: translate(2px, -2px);
+            opacity: 0.5;
+        }
+
+        @keyframes glitch-effect {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-1px, -1px); }
+            60% { transform: translate(2px, 1px); }
+            80% { transform: translate(1px, -2px); }
+            100% { transform: translate(0); }
+        }
+        /* ------------------------------------------ */
+
+
+        p.subtitle {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            margin-top: 2rem;
+            max-width: 550px;
+            line-height: 1.7;
+            color: #b0b0b0;
+            opacity: 0;
+            transform: translateY(40px);
+            border-left: 3px solid var(--main-color);
+            padding-left: 20px;
+            background: linear-gradient(90deg, rgba(0,255,136,0.1) 0%, rgba(0,0,0,0) 100%);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            color: var(--main-color);
+            letter-spacing: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .scroll-indicator span {
+            animation: blink 1.5s infinite;
+        }
+        .scroll-line {
+            width: 1px;
+            height: 30px;
+            background: var(--main-color);
+            margin-top: 10px;
+            opacity: 0.5;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="gl"></canvas>
+
+    <div class="ui-container">
+        <div class="hud hud-tl">PROJECT: OVERVOLT<br>STATUS: CHASSIS_PROTO_V1</div>
+        <div class="hud hud-tr">MAT: AL_6061-T6<br>WELD: ROBOTIC_TIG</div>
+        <div class="hud hud-bl">UNIT_ID: <span id="frame-id">OV-X-001</span><br>INPUT: <span id="coords">READY</span></div>
+        <div class="hud hud-br">SYSTEMS<br>STABLE</div>
+
+        <section id="hero">
+            <div class="cyber-title-container">
+                <h1 class="cyber-title" data-text="OVERVOLT">
+                    <span class="white-part">OVER</span><span class="green-part">VOLT</span>
+                </h1>
+            </div>
+            <p class="subtitle">
+                Ham metalin soğukluğu, aklın ateşiyle dövüldü. 
+                Tarihin tozlu sayfalarından değil, mühendisliğin sınırlarından doğan bir iskelet. 
+                Henüz bir kaportası yok çünkü ruhu, çıplak mekaniğinde saklı.
+            </p>
+            <div class="scroll-indicator">
+                <span>INITIALIZING SCAN...</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        // --- 1. SETUP ---
+        const canvas = document.querySelector('#gl');
+        const scene = new THREE.Scene();
+        // FOV'u biraz daraltıp daha "teknik çizim" havası verelim
+        const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
+        
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // --- 2. SHADER MATERIAL (Advanced Dither) ---
+        const vertexShader = `
+            varying vec2 vUv;
+            varying vec3 vNormal;
+            varying vec3 vPos;
+            uniform float uTime;
+            uniform float uScroll;
+
+            void main() {
+                vUv = uv;
+                vNormal = normalize(normalMatrix * normal);
+                
+                vec3 pos = position;
+                
+                // Çok hafif bir "canlılık" titreşimi
+                float tension = sin(uTime * 2.0 + pos.x * 0.5) * 0.002;
+                pos += normal * tension;
+
+                vPos = (modelMatrix * vec4(pos, 1.0)).xyz; // Dünya koordinatları
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+            }
+        `;
+
+        const fragmentShader = `
+            varying vec2 vUv;
+            varying vec3 vNormal;
+            varying vec3 vPos;
+
+            uniform vec3 uColor;
+            uniform float uTime;
+            
+            // Daha keskin, teknolojik dither matrisi
+            float dither8x8(vec2 position, float brightness) {
+                int x = int(mod(position.x, 8.0));
+                int y = int(mod(position.y, 8.0));
+                int index = x + y * 8;
+                float limit = 0.0;
+                
+                // Bayer matrisi (Daha büyük desen)
+                if (index == 0) limit = 0.015625; if (index == 1) limit = 0.515625; if (index == 2) limit = 0.140625; if (index == 3) limit = 0.640625; if (index == 4) limit = 0.046875; if (index == 5) limit = 0.546875; if (index == 6) limit = 0.171875; if (index == 7) limit = 0.671875;
+                if (index == 8) limit = 0.765625; if (index == 9) limit = 0.265625; if (index == 10) limit = 0.890625; if (index == 11) limit = 0.390625; if (index == 12) limit = 0.796875; if (index == 13) limit = 0.296875; if (index == 14) limit = 0.921875; if (index == 15) limit = 0.421875;
+                if (index == 16) limit = 0.203125; if (index == 17) limit = 0.703125; if (index == 18) limit = 0.078125; if (index == 19) limit = 0.578125; if (index == 20) limit = 0.234375; if (index == 21) limit = 0.734375; if (index == 22) limit = 0.109375; if (index == 23) limit = 0.609375;
+                if (index == 24) limit = 0.953125; if (index == 25) limit = 0.453125; if (index == 26) limit = 0.828125; if (index == 27) limit = 0.328125; if (index == 28) limit = 0.984375; if (index == 29) limit = 0.484375; if (index == 30) limit = 0.859375; if (index == 31) limit = 0.359375;
+                if (index == 32) limit = 0.0625; if (index == 33) limit = 0.5625; if (index == 34) limit = 0.1875; if (index == 35) limit = 0.6875; if (index == 36) limit = 0.03125; if (index == 37) limit = 0.53125; if (index == 38) limit = 0.15625; if (index == 39) limit = 0.65625;
+                if (index == 40) limit = 0.8125; if (index == 41) limit = 0.3125; if (index == 42) limit = 0.9375; if (index == 43) limit = 0.4375; if (index == 44) limit = 0.78125; if (index == 45) limit = 0.28125; if (index == 46) limit = 0.90625; if (index == 47) limit = 0.40625;
+                if (index == 48) limit = 0.25; if (index == 49) limit = 0.75; if (index == 50) limit = 0.125; if (index == 51) limit = 0.625; if (index == 52) limit = 0.21875; if (index == 53) limit = 0.71875; if (index == 54) limit = 0.09375; if (index == 55) limit = 0.59375;
+                if (index == 56) limit = 1.0; if (index == 57) limit = 0.5; if (index == 58) limit = 0.875; if (index == 59) limit = 0.375; if (index == 60) limit = 0.96875; if (index == 61) limit = 0.46875; if (index == 62) limit = 0.84375; if (index == 63) limit = 0.34375;
+
+                return brightness < limit ? 0.0 : 1.0;
+            }
+
+            void main() {
+                // Işıklandırma: Daha dramatik ve üstten
+                vec3 lightDir = normalize(vec3(0.2, 1.0, 0.5));
+                float diff = max(dot(vNormal, lightDir), 0.0);
+                
+                // Kenar Işığı (Rim Light) - Çok önemli
+                vec3 viewDir = normalize(cameraPosition - vPos);
+                float rim = 1.0 - abs(dot(viewDir, vNormal));
+                rim = pow(rim, 3.0); // Daha keskin kenarlar
+
+                float combinedLight = diff * 0.4 + rim * 0.9;
+
+                // Ekran koordinatlarına göre dither uygula
+                vec2 screenPos = gl_FragCoord.xy;
+                float dither = dither8x8(screenPos, combinedLight);
+                
+                // Renk paleti
+                vec3 finalColor = uColor * dither;
+                vec3 darkBG = vec3(0.01, 0.03, 0.01); // Tam siyah değil, çok koyu yeşil
+                
+                // Dither boşluklarını doldur (X-Ray efekti gibi)
+                if(dither < 0.1) {
+                    // Arka planda hafif bir ızgara çizgisi efekti
+                    float grid = step(0.98, fract(vPos.x * 2.0)) + step(0.98, fract(vPos.z * 2.0));
+                    gl_FragColor = vec4(mix(darkBG, uColor * 0.2, grid * 0.3), 1.0);
+                } else {
+                    gl_FragColor = vec4(finalColor, 1.0);
+                }
+            }
+        `;
+
+        const chassisMaterial = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            uniforms: {
+                uTime: { value: 0 },
+                uColor: { value: new THREE.Color("#00ff88") }, // OverVolt Green
+                uScroll: { value: 0 }
+            }
+        });
+
+        // --- 3. CHASSIS GENERATOR ---
+        function createSquareTube(p1, p2, thickness = 0.035) {
+            const vec = new THREE.Vector3().subVectors(p2, p1);
+            const len = vec.length();
+            const mid = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
+            const geom = new THREE.BoxGeometry(thickness, thickness, len);
+            const mesh = new THREE.Mesh(geom, chassisMaterial);
+            mesh.position.copy(mid);
+            mesh.lookAt(p2);
+            return mesh;
+        }
+
+        function buildChassis() {
+            const group = new THREE.Group();
+            
+            // Ölçüler (Görsele daha sadık)
+            const wR = 0.65; // Arka genişlik
+            const wF = 0.35; // Ön genişlik
+            const hBottom = 0.0;
+            const hTop = 0.45;
+            const hRoll = 0.95;
+            const zBack = -1.2;
+            const zMid = 0.6;
+            const zNose = 2.2;
+
+            // Noktalar
+            const pRB_L = new THREE.Vector3(-wR, hBottom, zBack);
+            const pRB_R = new THREE.Vector3(wR, hBottom, zBack);
+            const pRT_L = new THREE.Vector3(-wR, hTop, zBack);
+            const pRT_R = new THREE.Vector3(wR, hTop, zBack);
+
+            const pMB_L = new THREE.Vector3(-wR, hBottom, zMid);
+            const pMB_R = new THREE.Vector3(wR, hBottom, zMid);
+            const pMT_L = new THREE.Vector3(-wR, hTop, zMid);
+            const pMT_R = new THREE.Vector3(wR, hTop, zMid);
+
+            const pNB_L = new THREE.Vector3(-wF, 0.1, zNose);
+            const pNB_R = new THREE.Vector3(wF, 0.1, zNose);
+            const pNT_L = new THREE.Vector3(-wF, 0.3, zNose-0.2);
+            const pNT_R = new THREE.Vector3(wF, 0.3, zNose-0.2);
+
+            // Roll Bar (Daha açılı)
+            const pRoll_L = new THREE.Vector3(-0.3, hRoll, 0.2);
+            const pRoll_R = new THREE.Vector3(0.3, hRoll, 0.2);
+
+            // --- Montaj ---
+            // Alt Çerçeve
+            group.add(createSquareTube(pRB_L, pRB_R));
+            group.add(createSquareTube(pRB_L, pMB_L));
+            group.add(createSquareTube(pRB_R, pMB_R));
+            group.add(createSquareTube(pMB_L, pNB_L));
+            group.add(createSquareTube(pMB_R, pNB_R));
+            group.add(createSquareTube(pNB_L, pNB_R));
+
+            // Üst Çerçeve & Yanlar (Arka)
+            group.add(createSquareTube(pRT_L, pRT_R));
+            group.add(createSquareTube(pRB_L, pRT_L));
+            group.add(createSquareTube(pRB_R, pRT_R));
+            group.add(createSquareTube(pRT_L, pMT_L));
+            group.add(createSquareTube(pRT_R, pMT_R));
+            group.add(createSquareTube(pMB_L, pMT_L));
+            group.add(createSquareTube(pMB_R, pMT_R));
+
+            // Ön Burun Yapısı
+            group.add(createSquareTube(pMT_L, pNT_L));
+            group.add(createSquareTube(pMT_R, pNT_R));
+            group.add(createSquareTube(pNT_L, pNT_R));
+            group.add(createSquareTube(pNB_L, pNT_L));
+            group.add(createSquareTube(pNB_R, pNT_R));
+
+            // Roll Bar & Destekler
+            group.add(createSquareTube(pMT_L, pRoll_L));
+            group.add(createSquareTube(pMT_R, pRoll_R));
+            group.add(createSquareTube(pRoll_L, pRoll_R));
+            // Çapraz destekler (Görseldeki gibi)
+            group.add(createSquareTube(pRT_L, pRoll_L));
+            group.add(createSquareTube(pRT_R, pRoll_R));
+
+            return group;
+        }
+
+        const chassis = buildChassis();
+        // Başlangıç pozisyonu: Daha dramatik bir açı
+        chassis.rotation.set(0.1, Math.PI / 5, 0);
+        chassis.position.set(0.8, -0.2, 0);
+        scene.add(chassis);
+
+        camera.position.set(0, 1.2, 5.0);
+        camera.lookAt(0, 0.3, 0);
+
+
+        // --- 4. ANIMATION & INTERACTION ---
+        const clock = new THREE.Clock();
+        const coordsSpan = document.getElementById('coords');
+        
+        // Mouse Etkileşimi (Parallax)
+        window.addEventListener('mousemove', (e) => {
+            coordsSpan.innerText = `${e.clientX}x${e.clientY}`;
+            const x = (e.clientX / window.innerWidth) * 2 - 1;
+            const y = (e.clientY / window.innerHeight) * 2 - 1;
+            
+            gsap.to(chassis.rotation, {
+                z: x * 0.15, // Hafif yatırma
+                x: 0.1 + y * 0.1, // Yukarı aşağı bakma
+                duration: 1.2,
+                ease: "power2.out"
+            });
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = clock.getElapsedTime();
+            chassisMaterial.uniforms.uTime.value = time;
+            
+            // Çok yavaş, hipnotik bir dönüş
+            chassis.rotation.y += 0.0015;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // --- 5. GSAP SCROLL TRIGGERS ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Giriş Animasyonu (Sırayla gelme)
+        const tlEntry = gsap.timeline({ defaults: { ease: "power3.out" } });
+        tlEntry.fromTo(".hud", { opacity: 0 }, { opacity: 0.7, duration: 1, stagger: 0.1 })
+               .to(".cyber-title-container", { opacity: 1, y: 0, duration: 1.5, ease: "power4.out" }, "-=0.5")
+               .to(".subtitle", { opacity: 1, y: 0, duration: 1.2 }, "-=1.0");
+
+        // Scroll Efektleri
+        ScrollTrigger.create({
+            trigger: "body", start: "top top", end: "bottom bottom", scrub: 1,
+            onUpdate: (self) => {
+                chassisMaterial.uniforms.uScroll.value = self.progress;
+            }
+        });
+        
+        // Scroll yapınca dramatik zoom ve dönüş
+        gsap.to(camera.position, {
+            z: 2.5, y: 1.8, x: -1.0, // Kamerayı yaklaştır ve yana kaydır
+            scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 2 }
+        });
+        
+        gsap.to(chassis.rotation, {
+            y: Math.PI * 1.8, // Neredeyse iki tam tur
+            scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 2 }
+        });
+
+        // --- 6. RESIZE ---
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+    </script>
+</body>
+</html>
