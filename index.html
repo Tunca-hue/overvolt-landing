@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OverVolt | Ultimate Master V7 (Full Complete)</title>
+    <title>OverVolt | Ultimate Master V13 (Fixed ADAS Car)</title>
     <style>
-        /* --- CSS AYARLARI (MEVCUT KODLAR KORUNDU) --- */
+        /* --- CSS AYARLARI (AYNEN KORUNDU) --- */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: #030303; color: #e0e0e0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 2px); }
-        /* RENK PALETİ */
+        
+        /* RENKLER */
         :root { --main-color: #00ff88; --elec-color: #00aaff; --adas-color: #ff0055; }
         
         section { width: 100%; position: relative; padding: 0 5vw; display: flex; flex-direction: column; }
@@ -36,11 +37,10 @@
         .spec-item h4 { font-family: 'Inter', sans-serif; color: var(--main-color); margin-bottom: 5px; font-size: 0.8rem; }
         .spec-item p { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: #888; }
 
-        /* RENK ÖZELLEŞTİRMELERİ */
+        /* RENK VE STİL ÖZELLEŞTİRMELERİ */
         #electronics-details-section .tech-paragraph { border-color: var(--elec-color); margin-bottom: 1.5rem; }
         #electronics-details-section strong { color: var(--elec-color); letter-spacing: 1px; }
         
-        /* YENİ: ADAS DETAY RENKLERİ */
         #adas-details-section .tech-paragraph { border-color: var(--adas-color); margin-bottom: 1.5rem; }
         #adas-details-section strong { color: var(--adas-color); letter-spacing: 1px; }
 
@@ -63,14 +63,16 @@
 
         /* MOBİL UYUM */
         @media screen and (max-width: 768px) {
-            .showcase-wrapper { width: 100%; margin-left: 0; text-align: center; }
+            .showcase-wrapper { width: 100%; margin-left: 0; text-align: center; margin-top: 10vh; }
             .titles-container { align-items: center; }
-            h1.main-heading { transform-origin: center top; }
-            p.subtitle { margin: 2rem auto; text-align: left; }
+            h1.main-heading { transform-origin: center top; font-size: 12vw; }
+            h2.sub-heading { font-size: 6vw; }
+            p.subtitle { margin: 2rem auto; text-align: center; font-size: 0.85rem; border-left: none; border-bottom: 2px solid var(--main-color); padding-bottom: 10px; padding-left: 0; }
             .hud-tl, .hud-tr { display: none; }
-            .fixed-logo { left: 50%; transform: translateX(-50%); font-size: 1rem; }
-            #details-section, #electronics-details-section, #adas-section, #adas-details-section { padding-top: 30vh; }
+            .fixed-logo { left: 50%; transform: translateX(-50%); font-size: 1rem; top: 20px; }
+            #details-section, #electronics-details-section, #adas-details-section { padding-top: 30vh; }
             .tech-specs { grid-template-columns: 1fr; }
+            .glitch-text::before, .glitch-text::after { display: none; }
         }
     </style>
 </head>
@@ -107,11 +109,13 @@
     <!-- 3. MEKANİK DETAYLAR -->
     <section id="details-section">
         <div class="details-content">
-            <p class="tech-paragraph"><strong>// ŞASİ GEOMETRİSİ:</strong><br>Aracımız, Shell Eco-marathon Prototype kategorisi standartlarına uygun olarak 3 tekerlekli (tadpole) konfigürasyonda tasarlanmıştır. Aerodinamik verimlilik ve entegre takla kafesi.</p>
-            <p class="tech-paragraph"><strong>// MATERYAL BİLİMİ:</strong><br>Şasi üretiminde Karbon Fiber (CFRP) kompozitler tercih edilmiştir. %40 daha hafif, 3 kat daha dirençli.</p>
+            <p class="tech-paragraph"><strong>// ŞASİ GEOMETRİSİ VE DİNAMİKLERİ:</strong><br>Aracımız, Shell Eco-marathon Prototype kategorisi standartlarına tam uyum sağlayan, 2 ön ve 1 arka tekerlekten oluşan yenilikçi "tadpole" konfigürasyonuna sahiptir. Bu geometri, düşük hızlarda üstün manevra kabiliyeti sunarken, yüksek hızlarda aerodinamik stabiliteyi maksimize eder. Entegre alüminyum alaşımlı takla kafesi, pilot güvenliğini en üst seviyeye taşır ve şasi rijitliğine katkıda bulunur.</p>
+            <p class="tech-paragraph"><strong>// İLERİ MATERYAL BİLİMİ (CFRP):</strong><br>Şasi üretiminde, havacılık ve uzay endüstrisinde kullanılan yüksek modüllü Karbon Fiber Takviyeli Polimer (CFRP) kompozitler tercih edilmiştir. Vakum infüzyon tekniği ile üretilen monokok gövde, geleneksel çelik şasilere göre %40 daha hafif olmasına rağmen 3 kat daha yüksek çekme dayanımı ve burulma direnci sunar. Bu sayede enerji verimliliği radikal bir şekilde artırılır.</p>
             <div class="tech-specs">
-                <div class="spec-item"><h4>AĞIRLIK</h4><p>&lt; 28kg</p></div>
-                <div class="spec-item"><h4>SÜRTÜNME</h4><p>Cd: 0.11</p></div>
+                <div class="spec-item"><h4>TOPLAM AĞIRLIK</h4><p>&lt; 28kg (Pilot Hariç)</p></div>
+                <div class="spec-item"><h4>AERODİNAMİK SÜRTÜNME</h4><p>Cd: 0.11 (Rüzgar Tüneli Verisi)</p></div>
+                <div class="spec-item"><h4>YÜKSEK VOLTAJ BATARYA</h4><p>48V 20Ah Li-Ion (NMC Hücreler)</p></div>
+                <div class="spec-item"><h4>GÜÇ AKTARIM SİSTEMİ</h4><p>Tek Kademeli Redüktör & Zincir Tahrik</p></div>
             </div>
         </div>
     </section>
@@ -132,10 +136,10 @@
     <!-- 5. ELEKTRONİK DETAYLAR -->
     <section id="electronics-details-section">
         <div class="details-content">
-            <p class="tech-paragraph"><strong>// MOTOR SÜRÜCÜ (FOC):</strong><br>FOC (Field Oriented Control) algoritması ile %95+ verimlilik. 60V/150A kapasiteli, özel termal tasarımlı 3 fazlı inverter mimarisi.</p>
-            <p class="tech-paragraph"><strong>// BMS & YERLEŞİK ŞARJ (OBC):</strong><br>Aktif dengelemeli BMS, 13S Li-Ion paketi izler. OBC ünitesi, 220V AC şebekeden direkt dolum için CC/CV (Sabit Akım/Voltaj) şarj profili uygular.</p>
-            <p class="tech-paragraph"><strong>// EYS (DC/DC) & AKS:</strong><br>24V, 12V ve 5V seviyelerine güç sağlayan Buck konvertörler. Araç Kontrol Sistemi (AKS), 4G/LoRa ile telemetri verilerini işler.</p>
-            <p class="tech-paragraph"><strong>// KORUMA & HABERLEŞME:</strong><br>CAN-BUS hattı üzerinden tam senkronizasyon. İzolasyon, sıcaklık ve yangın gibi kritik durumlarda sistem otomatik kesilir.</p>
+            <p class="tech-paragraph"><strong>// GELİŞMİŞ MOTOR SÜRÜCÜ (FOC):</strong><br>Kendi tasarımımız olan motor sürücü, Alan Yönlendirmeli Kontrol (FOC) algoritmasını kullanarak motorun her anında optimum tork ve verimlilik sağlar. Sinüzoidal akım sürüşü sayesinde tork dalgalanmaları minimize edilir, sessiz ve pürüzsüz bir sürüş deneyimi sunulur. 60V giriş voltajı ve anlık 150A akım kapasitesi ile %95'in üzerinde sistem verimliliğine ulaşılmıştır.</p>
+            <p class="tech-paragraph"><strong>// AKILLI BATARYA YÖNETİMİ (BMS) & OBC:</strong><br>13S konfigürasyonundaki Li-Ion batarya paketi, aktif dengeleme özelliğine sahip gelişmiş bir BMS tarafından saniye saniye izlenir. Her bir hücrenin voltajı, sıcaklığı ve sağlık durumu (SOH) kontrol altında tutulur. Entegre Yerleşik Şarj Cihazı (OBC), standart 220V AC şebekeden güvenli ve hızlı şarj için CC/CV (Sabit Akım/Sabit Voltaj) profilini otomatik olarak uygular.</p>
+            <p class="tech-paragraph"><strong>// ENERJİ YÖNETİM SİSTEMİ (EYS) & TELEMETRİ:</strong><br>Araç üzerindeki farklı gerilim ihtiyaçları (24V sensörler, 12V aydınlatma, 5V işlemciler), yüksek verimli izole Buck konvertörler (DC/DC) tarafından karşılanır. Merkezi Araç Kontrol Sistemi (AKS), 4G ve LoRa modülleri üzerinden kritik verileri gerçek zamanlı olarak bulut sunucularına ve pit ekibine aktararak anlık strateji geliştirilmesine olanak tanır.</p>
+            <p class="tech-paragraph"><strong>// ÇOK KATMANLI KORUMA & HABERLEŞME:</strong><br>Tüm elektronik alt sistemler, endüstriyel standart olan CAN-BUS protokolü üzerinden güvenilir ve senkronize bir şekilde haberleşir. Donanımsal ve yazılımsal watchdog zamanlayıcıları, aşırı akım, aşırı voltaj, aşırı sıcaklık ve izolasyon hatası gibi kritik durumlarda sistemi milisaniyeler içinde güvenli bir şekilde kapatarak hem pilotu hem de donanımı korur.</p>
         </div>
     </section>
 
@@ -152,31 +156,18 @@
         </div>
     </section>
 
-    <!-- 7. ADAS DETAYLAR (YENİ EKLENDİ) -->
+    <!-- 7. ADAS DETAYLAR -->
     <section id="adas-details-section">
         <div class="details-content">
-            <p class="tech-paragraph">
-                <strong>// ŞERİT TAKİP SİSTEMİ (LKA):</strong><br>
-                Yüksek çözünürlüklü kameralar ve görüntü işleme algoritmaları ile yol çizgilerini mikrosaniye hassasiyetinde algılar. Sapma durumunda direksiyon sistemine aktif müdahale ederek aracı şeridin merkezinde tutar.
-            </p>
-            <p class="tech-paragraph">
-                <strong>// ADAPTİF HIZ SABİTLEME (ACC):</strong><br>
-                Ön radar sensörü ile trafik akışını ve öndeki araç mesafesini sürekli ölçer. Hızı otomatik olarak ayarlayarak güvenli takip mesafesini korur ve sürücü yorgunluğunu minimize eder.
-            </p>
-            <p class="tech-paragraph">
-                <strong>// OTONOM ACİL FRENLEME (AEB):</strong><br>
-                Lidar ve kamera sensör füzyonu sayesinde yaya, bisikletli veya ani duran araçları algılar. Çarpışma riski hesaplandığında, insan tepkisinden daha hızlı bir şekilde tam güçle frenleme yapar.
-            </p>
-            <p class="tech-paragraph">
-                <strong>// AI GÜÇ OPTİMİZASYONU (AI-PMS):</strong><br>
-                Araç, rota üzerindeki eğim verilerini ve anlık trafik durumunu analiz ederek motor torkunu ve rejeneratif frenleme seviyesini optimize eder. Bu sayede batarya verimliliği %15'e kadar artırılır.
-            </p>
+            <p class="tech-paragraph"><strong>// ŞERİT TAKİP SİSTEMİ (LKA):</strong><br>Yüksek çözünürlüklü kameralar ve görüntü işleme algoritmaları ile yol çizgilerini mikrosaniye hassasiyetinde algılar.</p>
+            <p class="tech-paragraph"><strong>// ADAPTİF HIZ SABİTLEME (ACC):</strong><br>Ön radar sensörü ile trafik akışını ve öndeki araç mesafesini sürekli ölçer. Hızı otomatik olarak ayarlar.</p>
+            <p class="tech-paragraph"><strong>// OTONOM ACİL FRENLEME (AEB):</strong><br>Lidar ve kamera sensör füzyonu sayesinde yaya, bisikletli veya ani duran araçları algılar ve otomatik frenler.</p>
+            <p class="tech-paragraph"><strong>// AI GÜÇ OPTİMİZASYONU:</strong><br>Araç, rota üzerindeki eğim verilerini ve anlık trafik durumunu analiz ederek enerji tüketimini %15 düşürür.</p>
         </div>
     </section>
 
     <div style="height: 50vh;"></div>
 
-    <!-- SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -209,14 +200,14 @@
         float dist = length(gl_PointCoord - vec2(0.5)); float intensity = 1.0 - smoothstep(0.0, 0.5, dist); intensity = pow(intensity, 3.0);
         gl_FragColor = vec4(uColor, vAlpha * uOpacity * intensity); }`;
 
-        // YENİ: ADAS SİNYAL SHADER'I (Hareketli Halka)
+        // ADAS SİNYAL SHADER'I
         const fragmentShaderADAS = `varying vec2 vUv; uniform vec3 uColor; uniform float uTime; uniform float uOpacity; void main() {
             float dist = length(vUv - 0.5);
-            float wave = fract(dist * 6.0 - uTime * 1.5); // Hızlı yayılan dalga
+            float wave = fract(dist * 6.0 - uTime * 1.5); 
             float ring = smoothstep(0.4, 0.5, wave) * smoothstep(0.6, 0.5, wave);
-            float brightness = 1.0 - smoothstep(0.0, 0.5, dist); // Merkez parlak
+            float brightness = 1.0 - smoothstep(0.0, 0.5, dist); 
             vec3 finalColor = uColor * (ring + 0.1) * brightness;
-            float alpha = smoothstep(0.5, 0.0, dist) * uOpacity; // Kenarları yumuşat
+            float alpha = smoothstep(0.5, 0.0, dist) * uOpacity; 
             gl_FragColor = vec4(finalColor, alpha);
         }`;
 
@@ -230,8 +221,19 @@
         const pcbWireMatRed = new THREE.ShaderMaterial({ vertexShader, fragmentShader: fragmentShaderBase, ...matSettings, uniforms: { ...matSettings.uniforms, uColor: { value: new THREE.Color("#990000") }, uOpacity: { value: 0.0 } } });
         const pcbWireMatBlack = new THREE.ShaderMaterial({ vertexShader, fragmentShader: fragmentShaderBase, ...matSettings, uniforms: { ...matSettings.uniforms, uColor: { value: new THREE.Color("#222222") }, uOpacity: { value: 0.0 } } });
         const connSparkMat = new THREE.ShaderMaterial({ vertexShader: vertexShaderSparkExpanded, fragmentShader: fragmentShaderSpark, ...matSettings, uniforms: { ...matSettings.uniforms, uColor: { value: new THREE.Color("#00aaff") }, uOpacity: { value: 0.0 } }, blending: THREE.AdditiveBlending, depthWrite: false });
-        // YENİ ADAS Materyali
         const adasMat = new THREE.ShaderMaterial({ vertexShader, fragmentShader: fragmentShaderADAS, ...matSettings, uniforms: { ...matSettings.uniforms, uColor: { value: new THREE.Color("#ff0055") }, uOpacity: { value: 0.0 } }, blending: THREE.AdditiveBlending, side: THREE.DoubleSide });
+        
+        // YENİ: ADAS CAR MATERIAL (PEMBE-KIRMIZI)
+        const adasCarMat = new THREE.ShaderMaterial({ 
+            vertexShader, 
+            fragmentShader: fragmentShaderBase, 
+            ...matSettings, 
+            uniforms: { 
+                ...matSettings.uniforms, 
+                uColor: { value: new THREE.Color("#ff0055") }, 
+                uOpacity: { value: 0.0 } 
+            } 
+        });
 
         const main3DGroup = new THREE.Group(); scene.add(main3DGroup);
 
@@ -239,7 +241,7 @@
         const chassisGroup = new THREE.Group(); main3DGroup.add(chassisGroup);
         function createSquareTube(p1, p2, thickness = 0.035, mat) { const vec = new THREE.Vector3().subVectors(p2, p1); const mid = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5); const geom = new THREE.BoxGeometry(thickness, thickness, vec.length()); const mesh = new THREE.Mesh(geom, mat); mesh.position.copy(mid); mesh.lookAt(p2); return mesh; }
         function buildChassis() { const group = new THREE.Group(); const wR = 0.65; const wF = 0.35; const hBottom = 0.0; const hTop = 0.45; const hRoll = 0.95; const zBack = -1.2; const zMid = 0.6; const zNose = 2.2; const pRB_L = new THREE.Vector3(-wR, hBottom, zBack); const pRB_R = new THREE.Vector3(wR, hBottom, zBack); const pRT_L = new THREE.Vector3(-wR, hTop, zBack); const pRT_R = new THREE.Vector3(wR, hTop, zBack); const pMB_L = new THREE.Vector3(-wR, hBottom, zMid); const pMB_R = new THREE.Vector3(wR, hBottom, zMid); const pMT_L = new THREE.Vector3(-wR, hTop, zMid); const pMT_R = new THREE.Vector3(wR, hTop, zMid); const pNB_L = new THREE.Vector3(-wF, 0.1, zNose); const pNB_R = new THREE.Vector3(wF, 0.1, zNose); const pNT_L = new THREE.Vector3(-wF, 0.3, zNose-0.2); const pNT_R = new THREE.Vector3(wF, 0.3, zNose-0.2); const pRoll_L = new THREE.Vector3(-0.3, hRoll, 0.2); const pRoll_R = new THREE.Vector3(0.3, hRoll, 0.2); group.add(createSquareTube(pRB_L, pRB_R, 0.035, chassisMaterial)); group.add(createSquareTube(pRB_L, pMB_L, 0.035, chassisMaterial)); group.add(createSquareTube(pRB_R, pMB_R, 0.035, chassisMaterial)); group.add(createSquareTube(pMB_L, pNB_L, 0.035, chassisMaterial)); group.add(createSquareTube(pMB_R, pNB_R, 0.035, chassisMaterial)); group.add(createSquareTube(pNB_L, pNB_R, 0.035, chassisMaterial)); group.add(createSquareTube(pRT_L, pRT_R, 0.035, chassisMaterial)); group.add(createSquareTube(pRB_L, pRT_L, 0.035, chassisMaterial)); group.add(createSquareTube(pRB_R, pRT_R, 0.035, chassisMaterial)); group.add(createSquareTube(pRT_L, pMT_L, 0.035, chassisMaterial)); group.add(createSquareTube(pRT_R, pMT_R, 0.035, chassisMaterial)); group.add(createSquareTube(pMB_L, pMT_L, 0.035, chassisMaterial)); group.add(createSquareTube(pMB_R, pMT_R, 0.035, chassisMaterial)); group.add(createSquareTube(pMT_L, pNT_L, 0.035, chassisMaterial)); group.add(createSquareTube(pMT_R, pNT_R, 0.035, chassisMaterial)); group.add(createSquareTube(pNT_L, pNT_R, 0.035, chassisMaterial)); group.add(createSquareTube(pNB_L, pNT_L, 0.035, chassisMaterial)); group.add(createSquareTube(pNB_R, pNT_R, 0.035, chassisMaterial)); group.add(createSquareTube(pMT_L, pRoll_L, 0.035, chassisMaterial)); group.add(createSquareTube(pMT_R, pRoll_R, 0.035, chassisMaterial)); group.add(createSquareTube(pRoll_L, pRoll_R, 0.035, chassisMaterial)); group.add(createSquareTube(pRT_L, pRoll_L, 0.035, chassisMaterial)); group.add(createSquareTube(pRT_R, pRoll_R, 0.035, chassisMaterial)); return group; }
-        const chassisGroupReal = buildChassis(); chassisGroup.add(chassisGroupReal); // Wrapper for scaling
+        const chassisGroupReal = buildChassis(); chassisGroup.add(chassisGroupReal); 
 
         // --- 2. MODEL: PCB ---
         const pcbGroup = new THREE.Group(); main3DGroup.add(pcbGroup); pcbGroup.scale.set(0,0,0);
@@ -269,29 +271,59 @@
         }
         const pcbGroupReal = buildDetailedPCB(); pcbGroup.add(pcbGroupReal);
 
-        // --- 3. MODEL: ADAS (GÜNCELLENDİ) ---
+        // --- 3. MODEL: ADAS (YENİLENMİŞ 3 TEKERLEKLİ CARTOON CAR) ---
         const adasGroup = new THREE.Group(); main3DGroup.add(adasGroup); adasGroup.scale.set(0,0,0);
-        function buildADAS() {
+        function buildCartoonCar() {
             const group = new THREE.Group();
-            // Fütüristik Araç Gövdesi (Basit geometrilerle)
-            const carBody = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.4, 2.2), chassisMaterial); 
-            carBody.position.y = 0.2; group.add(carBody);
-            const carCabin = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.3, 1.2), chassisMaterial);
-            carCabin.position.y = 0.55; carCabin.position.z = -0.2; group.add(carCabin);
             
-            // Lidar Halka Sinyalleri
-            const radarGeom = new THREE.PlaneGeometry(9, 9);
+            // Estetik Gövde (Kapsül Geometrisi yerine SphereGeometry kombinasyonu ile yuvarlatılmış yapı)
+            const bodyGroup = new THREE.Group();
+            
+            // Ana gövde (Esnetilmiş küre)
+            const mainBody = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 32), adasCarMat);
+            mainBody.scale.set(0.6, 0.25, 1.2);
+            mainBody.position.y = 0.25;
+            bodyGroup.add(mainBody);
+
+            // Kabin (Daha küçük, üstte küre)
+            const cabin = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), adasCarMat);
+            cabin.scale.set(0.9, 0.6, 1.2);
+            cabin.position.set(0, 0.45, -0.1);
+            bodyGroup.add(cabin);
+            
+            group.add(bodyGroup);
+
+            // Tekerlekler (3 Adet - Silindir)
+            const wheelGeo = new THREE.CylinderGeometry(0.25, 0.25, 0.15, 32);
+            wheelGeo.rotateZ(Math.PI/2);
+            
+            // Ön İki Tekerlek
+            const frontWheels = [
+                {x: 0.6, z: 0.6}, {x: -0.6, z: 0.6}
+            ];
+            frontWheels.forEach(pos => {
+                const w = new THREE.Mesh(wheelGeo, adasCarMat);
+                w.position.set(pos.x, 0.2, pos.z);
+                group.add(w);
+            });
+
+            // Arka Tek Tekerlek (Ortada)
+            const rearWheel = new THREE.Mesh(wheelGeo, adasCarMat);
+            rearWheel.position.set(0, 0.2, -0.7);
+            group.add(rearWheel);
+
+            // Lidar Sinyalleri (Arabanın altından yayılan)
+            const radarGeom = new THREE.PlaneGeometry(12, 12);
             const radarMesh = new THREE.Mesh(radarGeom, adasMat);
-            radarMesh.rotation.x = -Math.PI / 2; radarMesh.position.y = -0.2;
+            radarMesh.rotation.x = -Math.PI / 2;
+            radarMesh.position.y = 0.05;
             group.add(radarMesh);
-            
-            // Kubbe Sensör
-            const domeMesh = new THREE.Mesh(new THREE.SphereGeometry(3.5, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2), adasMat);
-            domeMesh.scale.y = 0.3; domeMesh.position.y = -0.2;
-            group.add(domeMesh);
+
             return group;
         }
-        const adasGroupReal = buildADAS(); adasGroup.add(adasGroupReal);
+        const adasCar = buildCartoonCar(); 
+        adasCar.scale.set(0.8, 0.8, 0.8); // Hafif küçültüldü
+        adasGroup.add(adasCar);
 
         // --- LOOP ---
         function update3DPosition() { const isMobile = window.innerWidth < 768; if(isMobile) { main3DGroup.rotation.set(0.1, 0, 0); main3DGroup.position.set(0, -1.0, -2.5); camera.position.set(0, 1.2, 7.5); } else { main3DGroup.rotation.set(0.2, -0.4, 0); main3DGroup.position.set(1.5, -0.5, 0); camera.position.set(0, 1.2, 5.5); } }
@@ -299,7 +331,7 @@
         window.addEventListener('mousemove', (e) => { if (chassisMaterial.uniforms.uOpacity.value > 0.1 && window.innerWidth > 768) { const x = (e.clientX / window.innerWidth) * 2 - 1; const y = (e.clientY / window.innerHeight) * 2 - 1; gsap.to(main3DGroup.rotation, { z: x * 0.1, x: 0.2 + y * 0.1, duration: 1 }); } });
         const clock = new THREE.Clock(); 
         function animate() { requestAnimationFrame(animate); const t = clock.getElapsedTime(); 
-            [chassisMaterial, pcbBoardMat, connSparkMat, adasMat].forEach(m => m.uniforms.uTime.value=t);
+            [chassisMaterial, pcbBoardMat, connSparkMat, adasMat, adasCarMat].forEach(m => m.uniforms.uTime.value=t);
             chassisGroup.rotation.y+=0.002; pcbGroup.rotation.y+=0.002; adasGroup.rotation.y+=0.002;
             renderer.render(scene, camera); } animate(); 
         window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); update3DPosition(); });
@@ -339,7 +371,7 @@
         tlElecDetails.to(main3DGroup.position, { x: isMobile ? 0 : 2.0, y: isMobile ? 1.5 : -0.5, z: isMobile ? -5.0 : -0.5, ease: "power2.inOut" }, 0);
         tlElecDetails.to("#electronics-details-section .details-content", { opacity: 1, y: 0, duration: 0.5 }, 0.5);
 
-        // 5. ELEC DETAIL -> ADAS SHOW (DÖNÜŞÜM 2)
+        // 5. ELEC DETAIL -> ADAS SHOW (YENİ DÖNÜŞÜM 2)
         const tlAdas = gsap.timeline({
             scrollTrigger: {
                 trigger: "#adas-section", start: "top bottom", end: "center center", scrub: 1,
@@ -356,26 +388,14 @@
         tlAdas.fromTo(adasGroup.scale, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1, duration: 1, ease: "power2.inOut" }, 0);
         
         tlAdas.to(adasMat.uniforms.uOpacity, { value: 1.0, duration: 0.5 }, 0.5);
+        tlAdas.to(adasCarMat.uniforms.uOpacity, { value: 1.0, duration: 0.5 }, 0.5);
         tlAdas.to(main3DGroup.position, { x: isMobile ? 0 : 1.5, y: isMobile ? -1.0 : -0.5, z: isMobile ? -2.5 : 0, ease: "power2.inOut" }, 0);
 
-        // 6. ADAS SHOW -> ADAS DETAILS (YENİ EKLENEN GSAP BÖLÜMÜ)
+        // 6. ADAS SHOW -> ADAS DETAILS (YENİ GEÇİŞ)
         const tlAdasDetails = gsap.timeline({ scrollTrigger: { trigger: "#adas-details-section", start: "top bottom", end: "top top", scrub: 1 } });
-        
-        // Başlık aşağı insin
         tlAdasDetails.to("#adas-section .sub-heading", { y: "85vh", x: "0vw", scale: 0.9, ease: "power2.inOut" }, 0);
-        
-        // Alt yazı kaybolsun
         tlAdasDetails.to("#adas-section .subtitle", { opacity: 0, duration: 0.5 }, 0);
-        
-        // 3D Model (Hayalet Araba) sağa kaysın
-        tlAdasDetails.to(main3DGroup.position, { 
-            x: isMobile ? 0 : 2.0, 
-            y: isMobile ? 1.5 : -0.5, 
-            z: isMobile ? -5.0 : -0.5, 
-            ease: "power2.inOut" 
-        }, 0);
-        
-        // Detay içeriği belirsin
+        tlAdasDetails.to(main3DGroup.position, { x: isMobile ? 0 : 2.0, y: isMobile ? 1.5 : -0.5, z: isMobile ? -5.0 : -0.5, ease: "power2.inOut" }, 0);
         tlAdasDetails.to("#adas-details-section .details-content", { opacity: 1, y: 0, duration: 0.5 }, 0.5);
 
     </script>
