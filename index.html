@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OverVolt | Ultimate Master V16 (Final Revisions)</title>
+    <title>OverVolt | Ultimate V20 (Gap Fixed)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -15,7 +15,7 @@
         
         section { width: 100%; position: relative; padding: 0 5vw; display: flex; flex-direction: column; }
 
-        /* 1. SAYFA */
+        /* 1. GİRİŞ SAYFASI */
         #intro-section { height: 100vh; justify-content: center; align-items: center; z-index: 20; }
         .huge-intro-title { font-family: 'Inter', sans-serif; font-size: clamp(3.5rem, 12vw, 15rem); font-weight: 900; text-transform: uppercase; letter-spacing: -0.08em; line-height: 0.8; text-align: center; color: #fff; }
         .scroll-hint { font-family: 'Space Mono', monospace; color: var(--main-color); font-size: 10px; letter-spacing: 3px; animation: blink 2s infinite; position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); }
@@ -24,13 +24,21 @@
         #showcase-section, #electronics-section, #adas-section, #team-showcase-section { height: 100vh; justify-content: center; align-items: flex-start; z-index: 10; }
         .showcase-wrapper { margin-left: 5vw; width: 50%; position: relative; z-index: 30; }
         .titles-container { display: flex; flex-direction: column; align-items: flex-start; }
+        
         h1.main-heading { font-family: 'Inter', sans-serif; font-size: clamp(3rem, 9vw, 8rem); font-weight: 900; line-height: 0.9; text-transform: uppercase; letter-spacing: -0.08em; color: #fff; margin: 0; transform-origin: top left; }
-        h2.sub-heading { font-family: 'Inter', sans-serif; font-size: clamp(1.5rem, 4vw, 3.5rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.05em; color: var(--main-color); margin: 0; margin-left: 5px; position: relative; }
+        h2.sub-heading { font-family: 'Inter', sans-serif; font-size: clamp(1.5rem, 4vw, 3.5rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.05em; color: var(--main-color); margin: 0; margin-left: 5px; position: relative; will-change: transform, opacity; }
+        
         p.subtitle { font-family: 'Space Mono', monospace; font-size: 0.9rem; margin-top: 2rem; max-width: 450px; line-height: 1.6; color: #b0b0b0; border-left: 3px solid var(--main-color); padding-left: 20px; background: linear-gradient(90deg, rgba(0,255,136,0.1) 0%, rgba(0,0,0,0) 100%); }
 
-        /* DETAY SAYFALARI */
-        #details-section, #electronics-details-section, #adas-details-section, #team-details-section { min-height: 100vh; justify-content: flex-start; z-index: 15; padding-top: 45vh; padding-left: 5vw; }
-        .details-content { width: 100%; max-width: 650px; opacity: 0; transform: translateY(50px); }
+        /* DETAY SAYFALARI (Metin konumları yukarı çekildi) */
+        #details-section, #electronics-details-section, #adas-details-section, #team-details-section { 
+            min-height: 100vh; 
+            justify-content: flex-start; 
+            z-index: 15; 
+            padding-top: 35vh; /* Metin yukarı alındı */
+            padding-left: 5vw; 
+        }
+        .details-content { width: 100%; max-width: 650px; opacity: 0; transform: translateY(50px); margin-top: 1rem; }
         .tech-paragraph { font-family: 'Space Mono', monospace; font-size: 0.9rem; line-height: 1.6; color: #ccc; margin-bottom: 2rem; border-left: 1px solid rgba(0, 255, 136, 0.3); padding-left: 20px; }
         .tech-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
         .spec-item h4 { font-family: 'Inter', sans-serif; color: var(--main-color); margin-bottom: 5px; font-size: 0.8rem; }
@@ -39,10 +47,8 @@
         /* RENK VE STİL ÖZELLEŞTİRMELERİ */
         #electronics-details-section .tech-paragraph { border-color: var(--elec-color); margin-bottom: 1.5rem; }
         #electronics-details-section strong { color: var(--elec-color); letter-spacing: 1px; }
-        
         #adas-details-section .tech-paragraph { border-color: var(--adas-color); margin-bottom: 1.5rem; }
         #adas-details-section strong { color: var(--adas-color); letter-spacing: 1px; }
-
         #team-details-section .tech-paragraph { border-color: var(--uni-color); margin-bottom: 1.5rem; }
         #team-details-section strong { color: var(--uni-color); letter-spacing: 1px; }
 
@@ -61,18 +67,26 @@
         .glitch-text::before { color: var(--main-color); animation: glitch-effect 3s infinite linear alternate-reverse; clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); transform: translate(-2px, 2px); opacity: 0.7; }
         .glitch-text::after { color: #ffffff; animation: glitch-effect 2.5s infinite linear alternate; clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%); transform: translate(2px, -2px); opacity: 0.5; }
         @keyframes glitch-effect { 0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(-1px, -1px); } 60% { transform: translate(2px, 1px); } 80% { transform: translate(1px, -2px); } 100% { transform: translate(0); } }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        /* MOBİL UYUM */
+        /* --- MOBİL OPTİMİZASYON --- */
         @media screen and (max-width: 768px) {
-            .showcase-wrapper { width: 100%; margin-left: 0; text-align: center; margin-top: 10vh; }
+            .showcase-wrapper { width: 100%; margin-left: 0; text-align: center; margin-top: 15vh; }
             .titles-container { align-items: center; }
-            h1.main-heading { transform-origin: center top; font-size: 12vw; }
-            h2.sub-heading { font-size: 6vw; }
-            p.subtitle { margin: 2rem auto; text-align: center; font-size: 0.85rem; border-left: none; border-bottom: 2px solid var(--main-color); padding-bottom: 10px; padding-left: 0; }
+            h1.main-heading { transform-origin: center top; font-size: 12vw; margin-bottom: 1vh;}
+            h2.sub-heading { font-size: 8vw; }
+            
+            p.subtitle { margin: 2rem auto; text-align: center; font-size: 0.85rem; border-left: none; border-bottom: 2px solid var(--main-color); padding-bottom: 10px; padding-left: 0; width: 90%; }
+
+            /* Mobilde metinleri biraz daha yukarı aldık */
+            #details-section, #electronics-details-section, #adas-details-section, #team-details-section { 
+                padding-top: 42vh; 
+                padding-left: 5vw;
+                padding-right: 5vw;
+            }
+            .details-content { margin-top: 0; }
+
             .hud-tl, .hud-tr { display: none; }
             .fixed-logo { left: 50%; transform: translateX(-50%); font-size: 1rem; top: 20px; }
-            #details-section, #electronics-details-section, #adas-details-section, #team-details-section { padding-top: 30vh; }
             .tech-specs { grid-template-columns: 1fr; }
             .glitch-text::before, .glitch-text::after { display: none; }
         }
@@ -108,7 +122,7 @@
 
     <section id="details-section">
         <div class="details-content">
-            <p class="tech-paragraph"><strong>// ŞASİ GEOMETRİSİ VE DİNAMİKLERİ:</strong><br>Aracımız, Shell Eco-marathon Prototype kategorisi standartlarına tam uyum sağlayan, 2 ön ve 1 arka tekerlekten oluşan yenilikçi "tadpole" konfigürasyonuna sahiptir. Bu geometri, düşük hızlarda üstün manevra kabiliyeti sunarken, yüksek hızlarda aerodinamik stabiliteyi maksimize eder. Entegre alüminyum alaşımlı takla kafesi, pilot güvenliğini en üst seviyeye taşır.</p>
+            <p class="tech-paragraph"><strong>// ŞASİ GEOMETRİSİ VE DİNAMİKLERİ:</strong><br>Aracımız, Shell Eco-marathon Prototype kategorisi standartlarına tam uyum sağlayan, 2 ön ve 1 arka tekerlekten oluşan yenilikçi "tadpole" konfigürasyonuna sahiptir. Bu geometri, düşük hızlarda üstün manevra kabiliyeti sunarken, yüksek hızlarda aerodinamik stabiliteyi maksimize eder.</p>
             <p class="tech-paragraph"><strong>// İLERİ MATERYAL BİLİMİ (CFRP):</strong><br>Şasi üretiminde, havacılık ve uzay endüstrisinde kullanılan yüksek modüllü Karbon Fiber Takviyeli Polimer (CFRP) kompozitler tercih edilmiştir. Vakum infüzyon tekniği ile üretilen monokok gövde, geleneksel çelik şasilere göre %40 daha hafif olmasına rağmen 3 kat daha yüksek çekme dayanımı sunar.</p>
             <div class="tech-specs">
                 <div class="spec-item"><h4>TOPLAM AĞIRLIK</h4><p>&lt; 28kg (Pilot Hariç)</p></div>
@@ -134,9 +148,9 @@
     <section id="electronics-details-section">
         <div class="details-content">
             <p class="tech-paragraph"><strong>// GELİŞMİŞ MOTOR SÜRÜCÜ (FOC):</strong><br>Kendi tasarımımız olan motor sürücü, Alan Yönlendirmeli Kontrol (FOC) algoritmasını kullanarak motorun her anında optimum tork ve verimlilik sağlar. Sinüzoidal akım sürüşü sayesinde tork dalgalanmaları minimize edilir, sessiz ve pürüzsüz bir sürüş deneyimi sunulur.</p>
-            <p class="tech-paragraph"><strong>// AKILLI BATARYA YÖNETİMİ (BMS) & OBC:</strong><br>13S konfigürasyonundaki Li-Ion batarya paketi, aktif dengeleme özelliğine sahip gelişmiş bir BMS tarafından izlenir. Her bir hücrenin voltajı ve sıcaklığı kontrol altında tutulur. Entegre Yerleşik Şarj Cihazı (OBC), güvenli şarj sağlar.</p>
+            <p class="tech-paragraph"><strong>// AKILLI BATARYA YÖNETİMİ (BMS) & OBC:</strong><br>13S konfigürasyonundaki Li-Ion batarya paketi, aktif dengeleme özelliğine sahip gelişmiş bir BMS tarafından izlenir. Entegre Yerleşik Şarj Cihazı (OBC), güvenli şarj sağlar.</p>
             <p class="tech-paragraph"><strong>// ENERJİ YÖNETİM SİSTEMİ (EYS):</strong><br>Araç üzerindeki farklı gerilim ihtiyaçları, yüksek verimli izole Buck konvertörler tarafından karşılanır. Merkezi Araç Kontrol Sistemi (AKS), telemetri verilerini pit ekibine aktarır.</p>
-            <p class="tech-paragraph"><strong>// GÜVENLİK VE KORUMA:</strong><br>Tüm alt sistemler CAN-BUS protokolü ile haberleşir. Aşırı akım ve voltaj durumlarında sistem kendini milisaniyeler içinde korumaya alır.</p>
+            <p class="tech-paragraph"><strong>// ÇOK KATMANLI KORUMA & HABERLEŞME:</strong><br>Tüm alt sistemler CAN-BUS protokolü ile haberleşir. Donanımsal ve yazılımsal watchdog zamanlayıcıları, aşırı akım, aşırı voltaj ve sıcaklık gibi durumlarda sistemi milisaniyeler içinde korur.</p>
         </div>
     </section>
 
@@ -175,7 +189,7 @@
 
     <section id="team-details-section">
         <div class="details-content">
-            <p class="tech-paragraph"><strong>// BİZ KİMİZ?</strong><br>Bizler, İstanbul Medeniyet Üniversitesi bünyesinde, sürdürülebilir bir gelecek vizyonuyla bir araya gelmiş, mühendislik tutkusuyla yanan bir ekibiz. Dönem başında kurulan takımımız, farklı disiplinlerden gelen yetenekli mühendis adaylarının ortak hayali olan "kendi imkanlarımızla geliştirdiğimiz yüksek verimli elektrikli araç" projesini hayata geçirmek için gece gündüz çalışmaktadır.</p>
+            <p class="tech-paragraph"><strong>// BİZ KİMİZ?</strong><br>Bizler, İstanbul Medeniyet Üniversitesi bünyesinde, sürdürülebilir bir gelecek vizyonuyla bir araya gelmiş, mühendislik tutkusuyla yanan bir ekibiz. Farklı disiplinlerden gelen yetenekli mühendis adaylarının ortak hayali olan "kendi imkanlarımızla geliştirdiğimiz yüksek verimli elektrikli araç" projesini hayata geçirmek için çalışıyoruz.</p>
             <p class="tech-paragraph"><strong>// MİSYONUMUZ:</strong><br>Teorik bilgiyi pratik deneyimle harmanlayarak, enerji verimliliği konusunda sınırları zorlayan, Shell Eco-marathon gibi uluslararası arenada ülkemizi ve üniversitemizi en iyi şekilde temsil edecek inovatif araçlar tasarlamak ve üretmektir.</p>
             <p class="tech-paragraph"><strong>// VİZYONUMUZ:</strong><br>Sadece bir araç üretmek değil, aynı zamanda geleceğin otomotiv teknolojilerine yön verecek mühendisler yetiştiren, AR-GE kültürüyle yoğrulmuş, sürdürülebilir bir inovasyon ekosistemi oluşturmaktır.</p>
         </div>
@@ -193,7 +207,7 @@
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // --- SHADERS ---
+        // --- SHADERS (Aynen korundu) ---
         const vertexShader = `varying vec2 vUv; varying vec3 vNormal; varying vec3 vPos; uniform float uTime; void main() { vUv = uv; vNormal = normalize(normalMatrix * normal); vec3 pos = position; float tension = sin(uTime * 2.0 + pos.x * 0.5) * 0.002; pos += normal * tension; vPos = (modelMatrix * vec4(pos, 1.0)).xyz; gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0); }`;
         const fragmentShaderBase = `varying vec2 vUv; varying vec3 vNormal; varying vec3 vPos; uniform vec3 uColor; uniform float uTime; uniform float uOpacity; float dither8x8(vec2 position, float brightness) { int x = int(mod(position.x, 8.0)); int y = int(mod(position.y, 8.0)); int index = x + y * 8; float limit = 0.0; if (index == 0) limit = 0.015625; if (index == 63) limit = 0.34375; if (x < 8) { if (index % 2 == 0) limit = 0.25; else limit = 0.75; } return brightness < limit ? 0.0 : 1.0; } void main() { vec3 lightDir = normalize(vec3(0.2, 1.0, 0.5)); float diff = max(dot(vNormal, lightDir), 0.0); vec3 viewDir = normalize(cameraPosition - vPos); float rim = 1.0 - abs(dot(viewDir, vNormal)); rim = pow(rim, 3.0); float combinedLight = diff * 0.4 + rim * 0.9; vec2 screenPos = gl_FragCoord.xy; float dither = dither8x8(screenPos, combinedLight); vec3 finalColor = uColor * dither; vec3 darkBG = vec3(0.01, 0.03, 0.01); vec4 colorOut; if(dither < 0.1) { float grid = step(0.98, fract(vPos.x * 2.0)) + step(0.98, fract(vPos.z * 2.0)); colorOut = vec4(mix(darkBG, uColor * 0.2, grid * 0.3), 1.0); } else { colorOut = vec4(finalColor, 1.0); } gl_FragColor = vec4(colorOut.rgb, colorOut.a * uOpacity); }`;
         const fragmentShaderPCB = `varying vec2 vUv; varying vec3 vNormal; varying vec3 vPos; uniform vec3 uColor; uniform float uTime; uniform float uOpacity; float dither8x8(vec2 position, float brightness) { int x = int(mod(position.x, 8.0)); int y = int(mod(position.y, 8.0)); int index = x + y * 8; float limit = 0.0; if (index == 0) limit = 0.015625; if (index == 63) limit = 0.34375; if (x < 8) { if (index % 2 == 0) limit = 0.25; else limit = 0.75; } return brightness < limit ? 0.0 : 1.0; } float circuitPattern(vec2 uv) { float size = 20.0; vec2 grid = floor(uv * size); vec2 sub = fract(uv * size); float line = step(0.4, sub.x) - step(0.6, sub.x) + step(0.4, sub.y) - step(0.6, sub.y); float via = step(length(sub - 0.5), 0.2); return max(line, via) * (mod(grid.x + grid.y, 2.0) * 0.5 + 0.5); } void main() { vec3 lightDir = normalize(vec3(0.2, 1.0, 0.5)); float diff = max(dot(vNormal, lightDir), 0.0); vec3 viewDir = normalize(cameraPosition - vPos); float rim = 1.0 - abs(dot(viewDir, vNormal)); rim = pow(rim, 3.0); float combinedLight = diff * 0.4 + rim * 0.9; float pattern = circuitPattern(vUv * vec2(2.0, 3.0)); vec2 screenPos = gl_FragCoord.xy; float dither = dither8x8(screenPos, combinedLight); vec3 finalColor = uColor * dither * (0.7 + pattern * 0.3); vec3 darkBG = vec3(0.01, 0.03, 0.01); vec4 colorOut; if(dither < 0.1) { float grid = step(0.98, fract(vPos.x * 2.0)) + step(0.98, fract(vPos.z * 2.0)); colorOut = vec4(mix(darkBG, uColor * 0.2, grid * 0.3), 1.0); } else { colorOut = vec4(finalColor, 1.0); } gl_FragColor = vec4(colorOut.rgb, colorOut.a * uOpacity); }`;
@@ -261,7 +275,7 @@
         }
         const adasCar = buildCartoonCar(); adasCar.scale.set(0.8, 0.8, 0.8); adasGroup.add(adasCar);
 
-        // --- 4. MODEL: ÜNİVERSİTE LOGOSU (DÜZELTİLMİŞ VE KÜÇÜLTÜLMÜŞ YAZI) ---
+        // --- 4. MODEL: ÜNİVERSİTE LOGOSU (IŞIKLI VE RENKLİ) ---
         const uniGroup = new THREE.Group(); main3DGroup.add(uniGroup); uniGroup.scale.set(0,0,0);
         function buildUniLogo() {
             const group = new THREE.Group();
@@ -269,15 +283,23 @@
             const positions = [{ x: -2*(barW+gap), h: 0.5 }, { x: -1*(barW+gap), h: 0.8 }, { x: 0, h: 1.1 }, { x: 1*(barW+gap), h: 0.8 }, { x: 2*(barW+gap), h: 0.5 }];
             positions.forEach(pos => { const geom = new THREE.BoxGeometry(barW, pos.h, barD); const mesh = new THREE.Mesh(geom, uniLogoMat); mesh.position.set(pos.x, pos.h / 2, 0); group.add(mesh); });
             
+            // YAZI (TURKUAZ VE IŞIKLI)
             const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
-            canvas.width = 512; canvas.height = 64; // Canvas boyutunu küçülttük
+            canvas.width = 512; canvas.height = 64; 
             ctx.fillStyle = 'rgba(0,0,0,0)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.font = '300 20px Arial'; ctx.fillStyle = '#ffffff'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            // Renk tam turkuaz yapıldı
+            ctx.fillStyle = '#00d2d3'; 
+            ctx.font = '300 20px Arial'; 
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             ctx.fillText('İSTANBUL MEDENİYET ÜNİVERSİTESİ', canvas.width / 2, canvas.height / 2);
             
             const tex = new THREE.CanvasTexture(canvas); tex.minFilter = THREE.LinearFilter;
-            const textPlane = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 0.18), new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.DoubleSide }));
-            textPlane.position.set(0, -0.15, 0); group.add(textPlane); // Y konumunu ayarladık
+            
+            // Yazı Materyali: MeshBasicMaterial kullanarak ışıktan etkilenmeden parlamasını sağlıyoruz
+            const textMat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.DoubleSide, color: 0xffffff });
+            
+            const textPlane = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 0.18), textMat);
+            textPlane.position.set(0, -0.15, 0); group.add(textPlane); 
             group.position.y = 0.2; return group;
         }
         const uniLogo = buildUniLogo(); uniGroup.add(uniLogo);
@@ -294,7 +316,7 @@
             renderer.render(scene, camera); } animate(); 
         window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); update3DPosition(); });
 
-        // --- GSAP SCROLL ---
+        // --- GSAP SCROLL (MOBİL OPTİMİZE + DOCKING BAŞLIKLAR + GAP FIXED) ---
         gsap.registerPlugin(ScrollTrigger); const isMobile = window.innerWidth < 768;
 
         // 1. INTRO -> MECH
@@ -305,28 +327,50 @@
 
         // 2. MECH SHOW -> MECH DETAIL
         const tlMech = gsap.timeline({ scrollTrigger: { trigger: "#details-section", start: "top bottom", end: "top top", scrub: 1 } });
-        tlMech.to("#showcase-section .main-heading", { scale: isMobile ? 0.3 : 0.2, x: isMobile ? "0vw" : "-30vw", y: isMobile ? "-45vh" : "-30vh", opacity: 0, ease: "power2.inOut", duration: 1 }, 0);
+        
+        // BAŞLIK DOCKING (AŞAĞI İNDİRİLDİ)
+        tlMech.to("#showcase-section .main-heading", { scale: isMobile ? 0.3 : 0.2, x: isMobile ? "0vw" : "-30vw", y: isMobile ? "-20vh" : "-30vh", opacity: 0, ease: "power2.inOut", duration: 1 }, 0);
         tlMech.to(".fixed-logo", { opacity: 1, duration: 1, ease: "power2.inOut" }, 0);
-        tlMech.to("#showcase-section .sub-heading", { y: "85vh", x: "0vw", scale: 0.9, ease: "power2.inOut" }, 0);
+        // MECHANICS: 55vh (Desktop) / 50vh (Mobile) - TAM OTURACAK ŞEKİLDE
+        tlMech.to("#showcase-section .sub-heading", { 
+            y: isMobile ? "50vh" : "55vh", 
+            x: isMobile ? "0vw" : "-2vw", 
+            scale: isMobile ? 0.5 : 0.6, 
+            opacity: 1, 
+            ease: "power2.inOut" 
+        }, 0);
         tlMech.to("#showcase-section .subtitle", { opacity: 0, duration: 0.5 }, 0);
-        tlMech.to(main3DGroup.position, { x: isMobile ? 0 : 2.5, y: isMobile ? 1.5 : -0.5, z: isMobile ? -5.0 : -1.0, ease: "power2.inOut" }, 0);
+        
+        // MOBİL: Model yukarı (y: 1.2) - Çakışma önlendi
+        tlMech.to(main3DGroup.position, { x: isMobile ? 0 : 2.5, y: isMobile ? 1.2 : -0.5, z: isMobile ? -3.0 : -1.0, ease: "power2.inOut" }, 0);
         tlMech.to(".details-content", { opacity: 1, y: 0, duration: 0.5 }, 0.5);
 
         // 3. MECH DETAIL -> ELEC SHOW
         const tlElec = gsap.timeline({ scrollTrigger: { trigger: "#electronics-section", start: "top bottom", end: "center center", scrub: 1, onEnter: () => { document.getElementById("hud-div").innerText = "ELECTRONICS"; document.getElementById("hud-mat").innerText = "SILICON_PCB"; }, onLeaveBack: () => { document.getElementById("hud-div").innerText = "MECHANICS"; document.getElementById("hud-mat").innerText = "CFRP_COMPOSITE"; } } });
+        
+        // Eski Bölümün Başlığını Burda Kaybet
+        tlElec.to("#showcase-section .sub-heading", { y: "60vh", opacity: 0, duration: 0.5 }, 0);
+        
         tlElec.to(".details-content", { opacity: 0, y: -50, duration: 0.5 }, 0);
-        tlElec.to("#showcase-section .sub-heading", { opacity: 0, duration: 0.5 }, 0);
         tlElec.to(chassisGroup.scale, { x: 0, y: 0, z: 0, duration: 1, ease: "power2.inOut" }, 0);
         tlElec.to(main3DGroup.rotation, { y: main3DGroup.rotation.y + Math.PI * 2, duration: 1, ease: "power2.inOut" }, 0);
         tlElec.fromTo(pcbGroup.scale, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1, duration: 1, ease: "power2.inOut" }, 0);
         [pcbBoardMat, pcbChipMat, pcbSmdMat, pcbCopperMat, pcbWireMatRed, pcbWireMatBlack, connSparkMat].forEach(mat => { tlElec.to(mat.uniforms.uOpacity, { value: 1.0, duration: 0.5 }, 0.5); });
-        tlElec.to(main3DGroup.position, { x: isMobile ? 0 : 1.5, y: isMobile ? -1.0 : -0.5, z: isMobile ? -2.5 : 0, ease: "power2.inOut" }, 0);
+        tlElec.to(main3DGroup.position, { x: isMobile ? 0 : 1.5, y: isMobile ? -0.5 : -0.5, z: isMobile ? -2.5 : 0, ease: "power2.inOut" }, 0);
 
         // 4. ELEC SHOW -> ELEC DETAIL
         const tlElecDetails = gsap.timeline({ scrollTrigger: { trigger: "#electronics-details-section", start: "top bottom", end: "top top", scrub: 1, onEnter: () => { document.getElementById("hud-div").innerText = "ELECTRONICS"; } } });
-        tlElecDetails.to("#electronics-section .sub-heading", { y: "85vh", x: "0vw", scale: 0.9, ease: "power2.inOut" }, 0);
+        tlElecDetails.to("#electronics-section .main-heading", { opacity: 0, y: "-20vh" }, 0);
+        // ELECTRONICS Başlığı: 55vh / 50vh
+        tlElecDetails.to("#electronics-section .sub-heading", { 
+            y: isMobile ? "50vh" : "55vh", 
+            x: isMobile ? "0vw" : "-2vw", 
+            scale: isMobile ? 0.5 : 0.6, 
+            opacity: 1, 
+            ease: "power2.inOut" 
+        }, 0);
         tlElecDetails.to("#electronics-section .subtitle", { opacity: 0, duration: 0.5 }, 0);
-        tlElecDetails.to(main3DGroup.position, { x: isMobile ? 0 : 2.0, y: isMobile ? 1.5 : -0.5, z: isMobile ? -5.0 : -0.5, ease: "power2.inOut" }, 0);
+        tlElecDetails.to(main3DGroup.position, { x: isMobile ? 0 : 2.0, y: isMobile ? 1.2 : -0.5, z: isMobile ? -3.0 : -0.5, ease: "power2.inOut" }, 0);
         tlElecDetails.to("#electronics-details-section .details-content", { opacity: 1, y: 0, duration: 0.5 }, 0.5);
 
         // 5. ELEC DETAIL -> ADAS SHOW
@@ -337,23 +381,32 @@
                 onLeaveBack: () => { document.getElementById("hud-div").innerText = "ELECTRONICS"; document.getElementById("hud-mat").innerText = "SILICON_PCB"; }
             }
         });
+        tlAdas.to("#electronics-section .sub-heading", { y: "60vh", opacity: 0, duration: 0.5 }, 0);
+
         tlAdas.to("#electronics-details-section .details-content", { opacity: 0, y: -50, duration: 0.5 }, 0);
-        tlAdas.to("#electronics-section .sub-heading", { opacity: 0, duration: 0.5 }, 0);
         tlAdas.to(pcbGroup.scale, { x: 0, y: 0, z: 0, duration: 1, ease: "power2.inOut" }, 0);
         tlAdas.to(main3DGroup.rotation, { y: main3DGroup.rotation.y + Math.PI * 2, duration: 1, ease: "power2.inOut" }, 0);
         tlAdas.fromTo(adasGroup.scale, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1, duration: 1, ease: "power2.inOut" }, 0);
         tlAdas.to(adasMat.uniforms.uOpacity, { value: 1.0, duration: 0.5 }, 0.5);
         tlAdas.to(adasCarMat.uniforms.uOpacity, { value: 1.0, duration: 0.5 }, 0.5);
-        tlAdas.to(main3DGroup.position, { x: isMobile ? 0 : 1.5, y: isMobile ? -1.0 : -0.5, z: isMobile ? -2.5 : 0, ease: "power2.inOut" }, 0);
+        tlAdas.to(main3DGroup.position, { x: isMobile ? 0 : 1.5, y: isMobile ? -0.5 : -0.5, z: isMobile ? -2.5 : 0, ease: "power2.inOut" }, 0);
 
         // 6. ADAS SHOW -> ADAS DETAILS
         const tlAdasDetails = gsap.timeline({ scrollTrigger: { trigger: "#adas-details-section", start: "top bottom", end: "top top", scrub: 1 } });
-        tlAdasDetails.to("#adas-section .sub-heading", { y: "85vh", x: "0vw", scale: 0.9, ease: "power2.inOut" }, 0);
+        tlAdasDetails.to("#adas-section .main-heading", { opacity: 0, y: "-20vh" }, 0);
+        // ADAS Başlığı: 55vh / 50vh
+        tlAdasDetails.to("#adas-section .sub-heading", { 
+            y: isMobile ? "50vh" : "55vh", 
+            x: isMobile ? "0vw" : "-2vw", 
+            scale: isMobile ? 0.5 : 0.6, 
+            opacity: 1, 
+            ease: "power2.inOut" 
+        }, 0);
         tlAdasDetails.to("#adas-section .subtitle", { opacity: 0, duration: 0.5 }, 0);
-        tlAdasDetails.to(main3DGroup.position, { x: isMobile ? 0 : 2.0, y: isMobile ? 1.5 : -0.5, z: isMobile ? -5.0 : -0.5, ease: "power2.inOut" }, 0);
+        tlAdasDetails.to(main3DGroup.position, { x: isMobile ? 0 : 2.0, y: isMobile ? 1.2 : -0.5, z: isMobile ? -3.0 : -0.5, ease: "power2.inOut" }, 0);
         tlAdasDetails.to("#adas-details-section .details-content", { opacity: 1, y: 0, duration: 0.5 }, 0.5);
 
-        // 7. ADAS DETAILS -> TEAM SHOWCASE (YENİ SAYFA 1 GEÇİŞİ)
+        // 7. ADAS DETAILS -> TEAM SHOWCASE
         const tlTeamShowcase = gsap.timeline({
             scrollTrigger: {
                 trigger: "#team-showcase-section", start: "top bottom", end: "center center", scrub: 1,
@@ -361,20 +414,29 @@
                 onLeaveBack: () => { document.getElementById("hud-div").innerText = "ADAS_AI"; document.getElementById("hud-mat").innerText = "SENSOR_FUSION"; }
             }
         });
+        tlTeamShowcase.to("#adas-section .sub-heading", { y: "60vh", opacity: 0, duration: 0.5 }, 0);
+
         tlTeamShowcase.to("#adas-details-section .details-content", { opacity: 0, y: -50, duration: 0.5 }, 0);
-        tlTeamShowcase.to("#adas-section .sub-heading", { opacity: 0, duration: 0.5 }, 0);
         tlTeamShowcase.to(adasGroup.scale, { x: 0, y: 0, z: 0, duration: 1, ease: "power2.inOut" }, 0);
         tlTeamShowcase.to(main3DGroup.rotation, { y: main3DGroup.rotation.y + Math.PI * 2, duration: 1, ease: "power2.inOut" }, 0);
         tlTeamShowcase.fromTo(uniGroup.scale, { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1, duration: 1, ease: "power2.inOut" }, 0);
         tlTeamShowcase.to(uniLogoMat.uniforms.uOpacity, { value: 1.0, duration: 0.5 }, 0.5);
-        tlTeamShowcase.to(main3DGroup.position, { x: isMobile ? 0 : 2.0, y: isMobile ? -0.5 : -0.5, z: isMobile ? -2.5 : 1.0, ease: "power2.inOut" }, 0); // Logoyu sağa al
+        // Logo pozisyonu
+        tlTeamShowcase.to(main3DGroup.position, { x: isMobile ? 0 : 2.0, y: isMobile ? -0.5 : -0.5, z: isMobile ? -2.5 : 1.0, ease: "power2.inOut" }, 0);
 
-        // 8. TEAM SHOWCASE -> TEAM DETAILS (YENİ SAYFA 2 GEÇİŞİ)
+        // 8. TEAM SHOWCASE -> TEAM DETAILS
         const tlTeamDetails = gsap.timeline({ scrollTrigger: { trigger: "#team-details-section", start: "top bottom", end: "top top", scrub: 1 } });
-        tlTeamDetails.to("#team-showcase-section .sub-heading", { y: "85vh", x: "0vw", scale: 0.9, ease: "power2.inOut" }, 0);
+        tlTeamDetails.to("#team-showcase-section .main-heading", { opacity: 0, y: "-20vh" }, 0);
+        // TEAM Başlığı: 55vh / 50vh
+        tlTeamDetails.to("#team-showcase-section .sub-heading", { 
+            y: isMobile ? "50vh" : "55vh", 
+            x: isMobile ? "0vw" : "-2vw", 
+            scale: isMobile ? 0.5 : 0.6, 
+            opacity: 1, 
+            ease: "power2.inOut" 
+        }, 0);
         tlTeamDetails.to("#team-showcase-section .subtitle", { opacity: 0, duration: 0.5 }, 0);
-        // Logo konumunu koru (sağda)
-        tlTeamDetails.to(main3DGroup.position, { x: isMobile ? 0 : 2.0, y: isMobile ? -0.5 : -0.5, z: isMobile ? -2.5 : 1.0, ease: "power2.inOut" }, 0);
+        tlTeamDetails.to(main3DGroup.position, { x: isMobile ? 0 : 2.0, y: isMobile ? 1.2 : -0.5, z: isMobile ? -3.0 : 1.0, ease: "power2.inOut" }, 0);
         tlTeamDetails.to("#team-details-section .details-content", { opacity: 1, y: 0, duration: 0.5 }, 0.5);
 
     </script>
